@@ -5,7 +5,7 @@ class TravianBot:
 
     def __init__(self):
 
-        self.login_page = LoginPage('xyzkds', 'Emiatyuk95')
+        self.login_page = LoginPage('', '')
 
     def login(self):
         self.dorf1_page = self.login_page.get_dorf1_page()
