@@ -18,4 +18,8 @@ if __name__ == '__main__':
 
     bot.login()
 
+    print(bot.resource_fields.resources)
+
+    bot.exit()
+
 

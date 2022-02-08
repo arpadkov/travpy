@@ -1,4 +1,5 @@
 from page_objects.page_object import PageObject
+from page_objects.resource_fields_page import ResourceFieldsPage
 
 
 class LoginPage(PageObject):
@@ -19,9 +20,7 @@ class LoginPage(PageObject):
         self.get_element("//input[@name='name']").send_keys(self.username)
         self.get_element("//input[@name='password']").send_keys(self.password)
 
-
-
-    def get_dorf1_page(self):
+    def get_resource_fields_page(self):
 
         self.driver.get(self.server_url)
 
@@ -30,3 +29,8 @@ class LoginPage(PageObject):
         self.enter_login_data()
 
         self.get_element("//button[@value='Login']").click()
+
+        return ResourceFieldsPage()
+
+    def close_browser(self):
+        self.driver.close()
