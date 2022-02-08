@@ -1,13 +1,12 @@
-from PageObject import PageObject
+from page_objects.page_object import PageObject
 
 
 class LoginPage(PageObject):
 
-    def __init__(self, username, password):
+    def __init__(self, login_data):
         super(LoginPage, self).__init__()
 
-        self.username = username
-        self.password = password
+        self.server_url, self.username, self.password = login_data
 
     def accept_cookies(self):
         try:
@@ -24,7 +23,7 @@ class LoginPage(PageObject):
 
     def get_dorf1_page(self):
 
-        self.driver.get('https://ts2.x1.europe.travian.com/')
+        self.driver.get(self.server_url)
 
         # self.accept_cookies()
 

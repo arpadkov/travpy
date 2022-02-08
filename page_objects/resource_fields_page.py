@@ -1,6 +1,6 @@
 
 
-class DorfOutPage:
+class ResourceFieldsPage:
 
     def __init__(self):
         pass
