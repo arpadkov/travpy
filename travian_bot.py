@@ -12,5 +12,8 @@ class TravianBot:
     def login(self):
         self.resource_fields = ResourceFields(self.login_page.get_resource_fields_page())
 
+    def run_resource_building(self):
+
+
     def exit(self):
         self.login_page.close_browser()

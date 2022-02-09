@@ -21,6 +21,13 @@ class ResourceFields:
     def read_resources(self):
         self.resources = Resources(self.page_object.read_resources())
 
+    def read_field_levels(self):
+        self.fields = self.page_object.read_field_levels()
+
+    def build_field(self, field_id):
+        self.page_object.build_field(field_id)
+
+
 
 
 

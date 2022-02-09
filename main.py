@@ -18,7 +18,8 @@ if __name__ == '__main__':
 
     bot.login()
 
-    print(bot.resource_fields.resources)
+    # bot.resource_fields.read_field_levels()
+    bot.resource_fields.build_field(8)
 
     bot.exit()
 
