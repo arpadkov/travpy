@@ -22,7 +22,13 @@ class Field:
 
     def read_type(self):
         type_start = self.outer_html.find('gid')
-        return self.outer_html[type_start + 3:type_start + 5]
+        return int(self.outer_html[type_start + 3:type_start + 5])
+
+    def __gt__(self, other):
+        return self.field_level > other.field_level
+
+    def __eq__(self, other):
+        return self.field_id == other.field_id
 
 
 class ResourceFieldsPage(PageObject):
@@ -32,11 +38,11 @@ class ResourceFieldsPage(PageObject):
         self.fields = self.read_fields()
 
     def read_resources(self):
-        lumber = self.get_element("//*[@id='l1']").text()
-        clay = self.get_element("//*[@id='l2']").text()
-        iron = self.get_element("//*[@id='l3']").text()
-        crop = self.get_element("//*[@id='l4']").text()
-        return lumber, clay, iron, crop
+        lumber = self.get_element("//*[@id='l1']").text().replace(',', '')
+        clay = self.get_element("//*[@id='l2']").text().replace(',', '')
+        iron = self.get_element("//*[@id='l3']").text().replace(',', '')
+        crop = self.get_element("//*[@id='l4']").text().replace(',', '')
+        return [int(lumber), int(clay), int(iron), int(crop)]
 
     def read_fields(self) -> list[Field]:
 
