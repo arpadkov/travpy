@@ -6,7 +6,6 @@ from modell.build_manager import BuildManager
 class TravianBot:
 
     def __init__(self, login_data):
-
         self.login_page = LoginPage(login_data)
         self.resource_fields = ResourceFieldsPage
         self.build_manager = BuildManager()
@@ -24,5 +23,8 @@ class TravianBot:
     def refresh_resources(self):
         self.build_manager.refresh_resources(self.resource_fields.read_resources())
 
-    def exit(self):
+    def close(self):
+        self.login_page.close_browser()
+
+    def __del__(self):
         self.login_page.close_browser()

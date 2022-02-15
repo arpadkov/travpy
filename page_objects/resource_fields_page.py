@@ -1,4 +1,6 @@
 from page_objects.page_object import PageObject, ClickWaitWebElement
+from page_objects.upgrade_resource_field_page import UpgradeResourceField
+from modell.resources import Resources
 
 from time import sleep
 
@@ -42,29 +44,38 @@ class ResourceFieldsPage(PageObject):
         clay = self.get_element("//*[@id='l2']").text().replace(',', '')
         iron = self.get_element("//*[@id='l3']").text().replace(',', '')
         crop = self.get_element("//*[@id='l4']").text().replace(',', '')
-        return [int(lumber), int(clay), int(iron), int(crop)]
+        return Resources([int(lumber), int(clay), int(iron), int(crop)])
 
     def read_fields(self) -> list[Field]:
 
-        fields = []
+        self.fields = []
         field_elements = self.get_elements("//*[@class[contains(.,'buildingSlot') and contains(.,'level')]]")
 
         for field_element in field_elements:
-            fields.append(Field(field_element))
+            self.fields.append(Field(field_element))
 
-        return fields
+        return self.fields
 
         # self.get_element("").hover()
         # field_name = self.get_element("//*[@class='tip-contents']//*[@class='title elementTitle']").text()
 
     def build_field(self, field_id_to_build):
-        field_to_build = None
+        self.read_fields()
+
         for field in self.fields:
             if field.field_id == field_id_to_build:
-                field_to_build = field
+                field.element.click()
 
-        if field_to_build:
-            field_to_build.element.click()
+        upgrade_page = UpgradeResourceField()
+
+        required = upgrade_page.read_required_resources()
+
+        if self.read_resources().is_enough_for(upgrade_page.read_required_resources()):
             upgrade_button = self.get_element("//button[contains(., 'Upgrade to level')]")
             upgrade_button.hover()
+
+        else:
+            self.get_element("//*[@class='village resourceView ']").click()
+
+
 

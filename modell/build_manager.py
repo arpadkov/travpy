@@ -1,16 +1,18 @@
-from page_objects.resource_fields_page import ResourceFieldsPage, Field
+from page_objects.resource_fields_page import Field
+from modell.resources import Resources
 
 
 class BuildManager:
 
     def __init__(self):
-        self.resources = [0, 0, 0, 0]
+        self.resources = Resources
 
-    def refresh_resources(self, resources: list):
+    def refresh_resources(self, resources: Resources):
         self.resources = resources
 
     def select_lowest_resource(self):
-        resource_list = list(self.resources)
+        # TODO: refactor to use built in method of Resources object
+        resource_list = self.resources.as_list()
         lowest_value = min(resource_list)
         return resource_list.index(lowest_value) + 1
 

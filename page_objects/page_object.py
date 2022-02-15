@@ -39,11 +39,17 @@ class ClickWaitWebElement:
     def text(self):
         return self._web_element.text
 
+    def element_class(self):
+        return self._web_element.get_attribute('class')
+
     def get_inner_html(self) -> str:
         return self._web_element.get_attribute('innerHTML')
 
     def get_outer_html(self) -> str:
         return self._web_element.get_attribute('outerHTML')
+
+    def __repr__(self):
+        return f'WebElement: class - {self.element_class()}, text - {self.text()}'
 
 
 class PageObject:
@@ -59,7 +65,8 @@ class PageObject:
         return ClickWaitWebElement(element, self.driver)
 
     def get_elements(self, path) -> list[ClickWaitWebElement]:
-        web_elements = self.driver.find_elements_by_xpath(path)
+        # web_elements = self.driver.find_elements_by_xpath(path)
+        web_elements = self.driver.find_elements(By.XPATH, path)
         my_web_elements = []
         for web_element in web_elements:
             my_web_elements.append(ClickWaitWebElement(web_element, self.driver))
