@@ -24,10 +24,15 @@ app = QApplication(sys.argv)
 
 window = MainWindow(bot)
 window.show()
+
+bot.login()
+bot.build_manager.ask_for_resources()
+
+
 app.exec_()
 
 
-# bot.login()
+
 
 # bot.refresh_resources()
 # bot.run_resource_building()

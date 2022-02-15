@@ -10,8 +10,8 @@ from random import randint
 from time import sleep
 
 
-def random_sleep():
-    sleep(randint(1, 1000)/1000)
+def random_sleep(minimum: int = 1, maximum: int = 1000):
+    sleep(randint(minimum, maximum)/1000)
 
 
 class ClickWaitWebElement:
