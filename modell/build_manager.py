@@ -4,6 +4,7 @@ from modell.resources import Resources
 from PyQt5 import QtCore
 
 import time
+import datetime
 
 
 class MessageObject(QtCore.QObject):
@@ -74,9 +75,7 @@ class BuildManager:
         self.fields = fields
 
     def set_building_status(self, building_for: int):
-        # TODO: convert it to datetime
-        self.building_until = building_for
-        print(self.building_until)
+        self.building_until = datetime.datetime.now() + datetime.timedelta(seconds=building_for)
 
     def run_resource_building(self):
         self.build_thread.start()

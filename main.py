@@ -17,8 +17,7 @@ def read_login_data():
 
 # if __name__ == '__main__':
 
-if read_login_data():
-    bot = TravianBot(read_login_data())
+bot = TravianBot(read_login_data())
 
 app = QApplication(sys.argv)
 
@@ -26,10 +25,10 @@ window = MainWindow(bot)
 window.show()
 
 bot.login()
-bot.build_manager.ask_building_status()
+bot.initialize_villages()
+
+# bot.build_manager.ask_building_status()
 # bot.build_manager.run_resource_building()
-
-
 
 app.exec_()
 

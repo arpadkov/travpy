@@ -60,7 +60,10 @@ class ResourceFieldsPage(PageObject):
     def read_building_status(self):
 
         currently_building = self.read_currently_building()
-        building_for = min(building.building_for for building in currently_building)
+        if currently_building:
+            building_for = min(building.building_for for building in currently_building)
+        else:
+            building_for = 0
 
         self.message_obj.emit_building_status(building_for)
 

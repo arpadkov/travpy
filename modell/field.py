@@ -22,6 +22,15 @@ class Field:
         type_start = self.outer_html.find('gid')
         return int(self.outer_html[type_start + 3:type_start + 5])
 
+    def __repr__(self):
+        names = {
+            1: 'Woodcutter',
+            2: 'Clay Pit',
+            3: 'Iron Mine',
+            4: 'Cropland'
+        }
+        return f'{names[self.read_type()]} - Level {self.read_level()}'
+
     def __gt__(self, other):
         return self.field_level > other.field_level
 

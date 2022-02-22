@@ -21,3 +21,6 @@ class Resources:
     def lowest(self):
         lowest_value = min(self.as_list())
         return self.as_list().index(lowest_value) + 1
+
+    def __repr__(self):
+        return f'Resources - Lumber: {self.lumber}, Clay: {self.clay}, Iron: {self.iron}, Crop: {self.crop}'
