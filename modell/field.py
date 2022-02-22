@@ -25,5 +25,8 @@ class Field:
     def __gt__(self, other):
         return self.field_level > other.field_level
 
+    def __lt__(self, other):
+        return self.field_level < other.field_level
+
     def __eq__(self, other):
         return self.field_id == other.field_id

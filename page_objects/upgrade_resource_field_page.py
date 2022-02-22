@@ -11,6 +11,6 @@ class UpgradeResourceField(PageObject):
 
     def read_required_resources(self):
         icons = self.get_elements("//*[@class='inlineIcon resource']")
-        return Resources([icon.text() for icon in icons][0:4])
+        return Resources(int(icons[0].text()), int(icons[1].text()), int(icons[2].text()), int(icons[3].text()))
 
 

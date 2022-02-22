@@ -39,6 +39,9 @@ class ClickWaitWebElement:
     def text(self):
         return self._web_element.text
 
+    def value(self):
+        return self._web_element.get_attribute("value")
+
     def element_class(self):
         return self._web_element.get_attribute('class')
 

@@ -3,11 +3,11 @@
 
 class Resources:
 
-    def __init__(self, resources: list):
-        self.lumber = int(resources[0])
-        self.clay = int(resources[1])
-        self.iron = int(resources[2])
-        self.crop = int(resources[3])
+    def __init__(self, lumber=0, clay=0, iron=0, crop=0):
+        self.lumber = lumber
+        self.clay = clay
+        self.iron = iron
+        self.crop = crop
 
     def as_list(self):
         return [self.lumber, self.clay, self.iron, self.crop]
@@ -17,3 +17,7 @@ class Resources:
             if owned < required:
                 return False
         return True
+
+    def lowest(self):
+        lowest_value = min(self.as_list())
+        return self.as_list().index(lowest_value) + 1

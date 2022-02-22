@@ -26,7 +26,9 @@ window = MainWindow(bot)
 window.show()
 
 bot.login()
-bot.build_manager.ask_for_resources()
+bot.build_manager.ask_building_status()
+# bot.build_manager.run_resource_building()
+
 
 
 app.exec_()
