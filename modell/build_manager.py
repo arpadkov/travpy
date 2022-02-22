@@ -31,18 +31,7 @@ class MessageObject(QtCore.QObject):
         self.build_resource_field_signal.emit(field_id)
 
 
-class BuildThread(QtCore.QThread):
 
-    building_pulse_signal = QtCore.pyqtSignal()
-
-    def __init__(self):
-        super(BuildThread, self).__init__()
-
-    def run(self):
-        while True:
-            time.sleep(3)
-            print('Sending build signal')
-            self.building_pulse_signal.emit()
 
 
 class BuildManager:
@@ -53,11 +42,11 @@ class BuildManager:
 
         self.building_until = None
 
-        self.build_thread = BuildThread()
+        # self.build_thread = BuildThread()
 
         self.message_obj = MessageObject()
 
-        self.build_thread.building_pulse_signal.connect(self.build_lowest_resource_field)
+        # self.build_thread.building_pulse_signal.connect(self.build_lowest_resource_field)
 
     def ask_for_resources(self):
         self.message_obj.emit_ask_resources()
@@ -77,8 +66,8 @@ class BuildManager:
     def set_building_status(self, building_for: int):
         self.building_until = datetime.datetime.now() + datetime.timedelta(seconds=building_for)
 
-    def run_resource_building(self):
-        self.build_thread.start()
+    # def run_resource_building(self):
+    #     self.build_thread.start()
 
     def build_lowest_resource_field(self):
         build_id = self.select_field_to_build()

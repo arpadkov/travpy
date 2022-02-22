@@ -25,7 +25,8 @@ window = MainWindow(bot)
 window.show()
 
 bot.login()
-bot.initialize_villages()
+bot.refresh_villages()
+print(bot.task_manager.resource_build_available())
 
 # bot.build_manager.ask_building_status()
 # bot.build_manager.run_resource_building()
