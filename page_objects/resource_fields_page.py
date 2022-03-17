@@ -12,7 +12,7 @@ class ResourceFieldsPage(PageObject):
 
     resources_signal = QtCore.pyqtSignal(object)
     fields_signal = QtCore.pyqtSignal(object)
-    building_status = QtCore.pyqtSignal(object)
+    resource_building_status = QtCore.pyqtSignal(object)
 
     def __init__(self):
         super(ResourceFieldsPage, self).__init__()
@@ -40,7 +40,10 @@ class ResourceFieldsPage(PageObject):
         self.emit_fields(fields)
         return fields
 
-    def read_building_status(self):
+    def read_resource_building_status(self):
+
+        if not self.is_building_resource_field():
+            return
 
         currently_building = self.read_currently_building()
         if currently_building:
@@ -48,7 +51,7 @@ class ResourceFieldsPage(PageObject):
         else:
             building_for = 0
 
-        self.emit_building_status(building_for)
+        self.resource_building_status.emit(building_for)
 
     def build_field(self, field_id_to_build):
 
@@ -90,7 +93,5 @@ class ResourceFieldsPage(PageObject):
     def emit_fields(self, fields: list[Field]):
         self.fields_signal.emit(fields)
 
-    def emit_building_status(self, building_for: int):
-        self.building_status.emit(building_for)
 
 

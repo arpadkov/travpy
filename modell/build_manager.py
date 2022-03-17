@@ -18,9 +18,9 @@ class BuildManager(QtCore.QObject):
         super(BuildManager, self).__init__()
 
         self.resources = Resources()
-        self.fields = []
+        self.fields = list[Field]
 
-        self.building_until = None
+        self.building_until = datetime.datetime
 
     def ask_for_resources(self):
         self.ask_resources_signal.emit()
