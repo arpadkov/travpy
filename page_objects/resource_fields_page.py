@@ -8,33 +8,16 @@ from utils.utils import building_from_string
 from PyQt5 import QtCore
 
 
-class MessageObject(QtCore.QObject):
+class ResourceFieldsPage(PageObject):
 
     resources_signal = QtCore.pyqtSignal(object)
     fields_signal = QtCore.pyqtSignal(object)
     building_status = QtCore.pyqtSignal(object)
 
     def __init__(self):
-        super(MessageObject, self).__init__()
-
-    def emit_resources(self, resources: Resources):
-        self.resources_signal.emit(resources)
-
-    def emit_fields(self, fields: list[Field]):
-        self.fields_signal.emit(fields)
-
-    def emit_building_status(self, building_for: int):
-        self.building_status.emit(building_for)
-
-
-class ResourceFieldsPage(PageObject):
-
-    def __init__(self):
         super(ResourceFieldsPage, self).__init__()
 
         self.resource_field_names = ['Woodcutter', 'Clay Pit', 'Iron Mine', 'Cropland']
-
-        self.message_obj = MessageObject()
 
     def read_resources(self) -> Resources:
         lumber = self.get_element("//*[@id='l1']").text().replace(',', '')
@@ -43,7 +26,7 @@ class ResourceFieldsPage(PageObject):
         crop = self.get_element("//*[@id='l4']").text().replace(',', '')
         resources = Resources(int(lumber), int(clay), int(iron), int(crop))
 
-        self.message_obj.emit_resources(resources)
+        self.emit_resources(resources)
         return resources
 
     def read_fields(self) -> list[Field]:
@@ -54,7 +37,7 @@ class ResourceFieldsPage(PageObject):
         for field_element in field_elements:
             fields.append(Field(field_element))
 
-        self.message_obj.emit_fields(fields)
+        self.emit_fields(fields)
         return fields
 
     def read_building_status(self):
@@ -65,7 +48,7 @@ class ResourceFieldsPage(PageObject):
         else:
             building_for = 0
 
-        self.message_obj.emit_building_status(building_for)
+        self.emit_building_status(building_for)
 
     def build_field(self, field_id_to_build):
 
@@ -100,5 +83,14 @@ class ResourceFieldsPage(PageObject):
             if build_under_construction.get_name() in self.resource_field_names:
                 return True
         return False
+
+    def emit_resources(self, resources: Resources):
+        self.resources_signal.emit(resources)
+
+    def emit_fields(self, fields: list[Field]):
+        self.fields_signal.emit(fields)
+
+    def emit_building_status(self, building_for: int):
+        self.building_status.emit(building_for)
 
 

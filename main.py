@@ -15,8 +15,6 @@ def read_login_data():
     return json_data["server_url"], json_data["username"], json_data["password"]
 
 
-# if __name__ == '__main__':
-
 bot = TravianBot(read_login_data())
 
 app = QApplication(sys.argv)
@@ -28,17 +26,6 @@ bot.login()
 bot.refresh_villages()
 print(bot.task_manager.resource_build_available())
 
-# bot.build_manager.ask_building_status()
-# bot.build_manager.run_resource_building()
-
 app.exec_()
 
-
-
-
-# bot.refresh_resources()
-# bot.run_resource_building()
-# bot.build_manager.select_lowest_field(bot.resource_fields.read_fields())
-
-# bot.exit()
 

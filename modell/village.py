@@ -34,16 +34,16 @@ class Village(QtCore.QObject):
         self.is_building_resource_field = self.resource_fields.is_building_resource_field()
 
     def connect_build_manager_to_resource_fields(self):
-        self.build_manager.message_obj.ask_building_status.connect(self.resource_fields.read_building_status)
-        self.resource_fields.message_obj.building_status.connect(self.build_manager.set_building_status)
+        self.build_manager.ask_building_status_signal.connect(self.resource_fields.read_building_status)
+        self.resource_fields.building_status.connect(self.build_manager.set_building_status)
 
-        self.build_manager.message_obj.ask_resources_signal.connect(self.resource_fields.read_resources)
-        self.resource_fields.message_obj.resources_signal.connect(self.build_manager.set_resources)
+        self.build_manager.ask_resources_signal.connect(self.resource_fields.read_resources)
+        self.resource_fields.resources_signal.connect(self.build_manager.set_resources)
 
-        self.build_manager.message_obj.ask_fields_signal.connect(self.resource_fields.read_fields)
-        self.resource_fields.message_obj.fields_signal.connect(self.build_manager.set_fields)
+        self.build_manager.ask_fields_signal.connect(self.resource_fields.read_fields)
+        self.resource_fields.fields_signal.connect(self.build_manager.set_fields)
 
-        self.build_manager.message_obj.build_resource_field_signal.connect(self.resource_fields.build_field)
+        self.build_manager.build_resource_field_signal.connect(self.resource_fields.build_field)
 
     def build_until(self):
         return self.build_manager.building_until

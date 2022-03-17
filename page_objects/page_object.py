@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException
 
+from PyQt5 import QtCore
+
 from random import randint
 from time import sleep
 
@@ -55,11 +57,12 @@ class ClickWaitWebElement:
         return f'WebElement: class - {self.element_class()}, text - {self.text()}'
 
 
-class PageObject:
+class PageObject(QtCore.QObject):
 
     driver = webdriver.Chrome()
 
     def __init__(self, timeout=5):
+        super(PageObject, self).__init__()
         self.timeout = timeout
 
     def get_element(self, xpath):

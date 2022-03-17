@@ -3,59 +3,33 @@ from modell.resources import Resources
 
 from PyQt5 import QtCore
 
-import time
 import datetime
 
 
-class MessageObject(QtCore.QObject):
+class BuildManager(QtCore.QObject):
 
     ask_resources_signal = QtCore.pyqtSignal()
     ask_fields_signal = QtCore.pyqtSignal()
-    ask_building_status = QtCore.pyqtSignal()
+    ask_building_status_signal = QtCore.pyqtSignal()
 
     build_resource_field_signal = QtCore.pyqtSignal(object)
 
     def __init__(self):
-        super(MessageObject, self).__init__()
+        super(BuildManager, self).__init__()
 
-    def emit_ask_resources(self):
-        self.ask_resources_signal.emit()
-
-    def emit_ask_fields(self):
-        self.ask_fields_signal.emit()
-
-    def emit_ask_building_status(self):
-        self.ask_building_status.emit()
-
-    def build_resource_field(self, field_id: int):
-        self.build_resource_field_signal.emit(field_id)
-
-
-
-
-
-class BuildManager:
-
-    def __init__(self):
         self.resources = Resources()
         self.fields = []
 
         self.building_until = None
 
-        # self.build_thread = BuildThread()
-
-        self.message_obj = MessageObject()
-
-        # self.build_thread.building_pulse_signal.connect(self.build_lowest_resource_field)
-
     def ask_for_resources(self):
-        self.message_obj.emit_ask_resources()
+        self.ask_resources_signal.emit()
 
     def ask_for_fields(self):
-        self.message_obj.emit_ask_fields()
+        self.ask_fields_signal.emit()
 
     def ask_building_status(self):
-        self.message_obj.emit_ask_building_status()
+        self.ask_building_status_signal.emit()
 
     def set_resources(self, resources: Resources):
         self.resources = resources
@@ -65,9 +39,6 @@ class BuildManager:
 
     def set_building_status(self, building_for: int):
         self.building_until = datetime.datetime.now() + datetime.timedelta(seconds=building_for)
-
-    # def run_resource_building(self):
-    #     self.build_thread.start()
 
     def build_lowest_resource_field(self):
         build_id = self.select_field_to_build()
@@ -87,3 +58,5 @@ class BuildManager:
         lowest_level_field = min(identical_fields)
         return lowest_level_field.field_id
 
+    def build_resource_field(self, field_id: int):
+        self.build_resource_field_signal.emit(field_id)
