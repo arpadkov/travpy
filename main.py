@@ -24,7 +24,7 @@ window.show()
 
 bot.login()
 bot.initialize_villages()
-print(bot.task_manager.villages[0].next_resource_task_available_at)
+print(bot.task_manager.select_next_resource_task())
 
 app.exec_()
 

@@ -45,6 +45,12 @@ class TaskManager:
     def select_next_resource_task(self) -> (Village, datetime.datetime):
         next_village_for_resource = self.villages[0]
 
+        for village in self.villages:
+            if village.next_resource_task_available_at < next_village_for_resource.next_resource_task_available_at:
+                if not village.resource_fields_completed():
+                    next_village_for_resource = village
+        return next_village_for_resource
+
 
 
 
