@@ -14,8 +14,11 @@ class TravianBot:
         self.login_page.login()
 
     def refresh_villages(self):
-
         self.task_manager.villages.clear()
+        self.initialize_villages()
+
+    def initialize_villages(self):
+        self.task_manager.villages = []
         villages_num = len(self.login_page.get_elements("//*[@class='villageList']//*[@class='iconAndNameWrapper']"))
         for village_num in range(villages_num):
             self.task_manager.villages.append(Village(village_num))

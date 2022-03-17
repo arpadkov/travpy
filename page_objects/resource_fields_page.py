@@ -1,3 +1,5 @@
+import datetime
+
 from page_objects.page_object import PageObject
 from page_objects.upgrade_resource_field_page import UpgradeResourceField
 from modell.building import Building, BuildingConstruction
@@ -40,22 +42,23 @@ class ResourceFieldsPage(PageObject):
         self.emit_fields(fields)
         return fields
 
-    def read_resource_building_status(self):
+    def read_resource_building_status(self) -> datetime.timedelta:
 
-        if not self.is_building_resource_field():
-            return
+        if not self.is_building_resource():
+            return datetime.timedelta(0)
 
-        currently_building = self.read_currently_building()
-        if currently_building:
-            building_for = min(building.building_for for building in currently_building)
-        else:
-            building_for = 0
+        # currently_building = self.read_currently_building()
+        # if currently_building:
+        #     building_for = min(building.building_for for building in currently_building)
+        # else:
+        #     building_for = 0
 
-        self.resource_building_status.emit(building_for)
+        self.resource_building_status.emit(self.read_currently_building_resource().building_for)
+        return self.read_currently_building_resource().building_for
 
     def build_field(self, field_id_to_build):
 
-        if self.is_building_resource_field():
+        if self.is_building_resource():
             return
 
         fields = self.read_fields()
@@ -81,7 +84,12 @@ class ResourceFieldsPage(PageObject):
 
         return [BuildingConstruction(building, done_at) for (building, done_at) in zip(buildings, dones_at)]
 
-    def is_building_resource_field(self):
+    def read_currently_building_resource(self) -> BuildingConstruction:
+        for build_under_construction in self.read_currently_building():
+            if build_under_construction.get_name() in self.resource_field_names:
+                return build_under_construction
+
+    def is_building_resource(self):
         for build_under_construction in self.read_currently_building():
             if build_under_construction.get_name() in self.resource_field_names:
                 return True

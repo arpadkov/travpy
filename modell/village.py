@@ -18,11 +18,10 @@ class Village(QtCore.QObject):
         self.connect_build_manager_to_resource_fields()
 
         self.is_building_resource_field = bool
-
-        self.village_name = ''
-        self.initialize_village()
-
         self.next_resource_task_available_at = datetime.datetime
+        self.village_name = str
+
+        self.initialize_village()
 
     def initialize_village(self):
         village_elements = self.resource_fields.get_elements("//*[@class='villageList']//*[@class='iconAndNameWrapper']")
@@ -33,7 +32,9 @@ class Village(QtCore.QObject):
         self.build_manager.ask_for_fields()
         self.build_manager.ask_for_resources()
 
-        self.is_building_resource_field = self.resource_fields.is_building_resource_field()
+        self.is_building_resource_field = self.resource_fields.is_building_resource()
+
+        self.set_next_resource_task()
 
     def connect_build_manager_to_resource_fields(self):
         self.build_manager.ask_building_status_signal.connect(self.resource_fields.read_resource_building_status)
@@ -59,9 +60,10 @@ class Village(QtCore.QObject):
                 return False
         return True
 
-    def set_next_resource_task_date(self):
-        if self.is_building_resource_field:
-
+    def set_next_resource_task(self):
+        self.next_resource_task_available_at =\
+            datetime.datetime.now() + self.resource_fields.read_resource_building_status()
+        # print(self.next_resource_task_available_at)
 
     def emit_building_done_at_signal(self):
         self.building_done_at_signal.emit(self.build_manager.building_until)

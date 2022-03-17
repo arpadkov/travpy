@@ -1,4 +1,4 @@
-import time
+import datetime
 
 
 class Building:
@@ -12,7 +12,7 @@ class BuildingConstruction:
 
     def __init__(self, building: Building, building_for: str):
         self.building = building
-        self.building_for = int(building_for)
+        self.building_for = datetime.timedelta(seconds=int(building_for))
 
     def get_name(self):
         return self.building.name

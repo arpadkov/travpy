@@ -23,8 +23,8 @@ window = MainWindow(bot)
 window.show()
 
 bot.login()
-bot.refresh_villages()
-print(bot.task_manager.resource_build_available())
+bot.initialize_villages()
+print(bot.task_manager.villages[0].next_resource_task_available_at)
 
 app.exec_()
 

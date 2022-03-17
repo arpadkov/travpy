@@ -37,8 +37,8 @@ class BuildManager(QtCore.QObject):
     def set_fields(self, fields: list[Field]):
         self.fields = fields
 
-    def set_building_status(self, building_for: int):
-        self.building_until = datetime.datetime.now() + datetime.timedelta(seconds=building_for)
+    def set_building_status(self, building_for: datetime.timedelta):
+        self.building_until = datetime.datetime.now() + building_for
 
     def build_lowest_resource_field(self):
         build_id = self.select_field_to_build()
